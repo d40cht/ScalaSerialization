@@ -92,13 +92,27 @@ object StandardSerializers
         
         def load( ia : IArchive ) =
         {
-            val lb = mutable.ListBuffer[A]()
-            
             val l = ia.load[Int]
             
             (0 until l).map( i => ia.load[A] ).toList
         }
     }
+    
+    /*implicit def vectorSerializer[A <% Serializer[A]]( l : immutable.Vector[A] ) = new Serializer[immutable.Vector[A]]
+    {
+        def save( oa : OArchive ) =
+        {
+            oa.save( l.size )
+            l.foreach( el => oa.save(el) )
+        }
+        
+        def load( ia : IArchive ) =
+        {
+            val l = ia.load[Int]
+            
+            (0 until l).map( i => ia.load[A] ).toIndexedSeq.toVector
+        }
+    }*/
 }
 
 object MySerializers
@@ -118,6 +132,8 @@ object MySerializers
 
 class Test extends FunSuite
 {
+    // TODO: Map[java.lang.Object, Long] for ids and ref/val serialization
+    // TODO: Polymorphic types?
     test("Simple test")
     {
         import StandardSerializers._
@@ -144,6 +160,7 @@ class Test extends FunSuite
         val f = List(a, b, c)
         val g = Array(a, b, c)
         oa.save(f)
+        //oa.save(g)
     }
 }
 
