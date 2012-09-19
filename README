@@ -1,0 +1,5 @@
+Scala serialization library inspired by sbinary (in turn inspired by Haskell Data.Binary)
+
+Intended to support serialization of most of the standard collections, but in addition to keep track of objects already serialized and only store their contents once (future occurrences to be handled with references).
+
+Should enable reliable serialization of graphs (including with cycles).
